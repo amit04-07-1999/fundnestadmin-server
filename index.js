@@ -3,13 +3,15 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const path = require('path')
 
 
 dotenv.config();
 
 // Importing routers and middleware
 const admin = require('./adminRoutes/userRoutes');
-const middleware  = require('./adminMiddleware/jwtTokenMiddleware');
+const middleware = require('./adminMiddleware/jwtTokenMiddleware');
+const video = require('./adminRoutes/videoRoutes')
 
 // Initialize express app
 const app = express();
@@ -19,10 +21,18 @@ app.use(cors());
 
 // Use bodyParser middleware
 app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Set static folder for React
+app.use(express.static(path.join(__dirname, 'client', 'build')));
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Define parent routers
 app.use('/admin', admin);
 app.use(middleware);
+app.use('/videos', video)
 
 // MongoDB connection
 const dbURI = 'mongodb+srv://Fundnest:8877446687@fundnest.lris2bh.mongodb.net/'; // MongoDB remote
