@@ -56,10 +56,12 @@ exports.uploadVideo = (req, res) => {
 
 // Get list of videos
 exports.getVideos = (req, res) => {
-  const uploadsDir = path.join(__dirname, './uploads');
+  const uploadsDir = path.join(__dirname, '../uploads');
   fs.readdir(uploadsDir, (err, files) => {
     if (err) {
+      console.log(err , "dfghjk");
       return res.status(500).json({ msg: 'Unable to scan directory' });
+
     }
     const videoUrls = files.map(file => `http://103.189.172.172:4000/uploads/${file}`);
     res.json(videoUrls);

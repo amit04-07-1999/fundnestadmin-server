@@ -27,7 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 // Set static folder for React
 app.use(express.static(path.join(__dirname, 'build')));
 
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Define parent routers
 app.use('/admin', admin);
