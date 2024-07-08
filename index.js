@@ -25,7 +25,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Set static folder for React
-app.use(express.static(path.join(__dirname, 'client', 'build')));
+app.use(express.static(path.join(__dirname, 'build')));
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
@@ -44,6 +44,14 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .catch(error => {
         console.error('Error connecting to MongoDB:', error.message);
     });
+
+
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
+
 
 // Start the server
 const PORT = 4000;
