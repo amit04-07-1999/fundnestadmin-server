@@ -56,7 +56,7 @@ exports.uploadVideo = (req, res) => {
 
 // Get list of videos
 exports.getVideos = (req, res) => {
-  const uploadsDir = path.join(__dirname, '../uploads/');
+  const uploadsDir = path.join(__dirname, './uploads');
   fs.readdir(uploadsDir, (err, files) => {
     if (err) {
       return res.status(500).json({ msg: 'Unable to scan directory' });
