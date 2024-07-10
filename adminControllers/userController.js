@@ -4,6 +4,7 @@ const AdminUser = require('../adminModels/Adminuser');
 const dotenv = require('dotenv');
 const User = require('../adminModels/user')
 const Appointments = require('../adminModels/appointment')
+const WebinarBooking = require('../adminModels/webinar')
 // const Appointments = require('../../backend/model/appointment')
 
 
@@ -47,7 +48,7 @@ const login = async (req, res) => {
 
         const token = jwt.sign(
             { userId: user._id, role: user.role },
-             "qwerty5678",
+            "qwerty5678",
             { expiresIn: '100d' }
         );
 
@@ -56,7 +57,7 @@ const login = async (req, res) => {
     } catch (error) {
         console.log(error, "error");
         res.status(500).json({ error: 'Server error' });
-        
+
     }
 };
 
@@ -105,11 +106,11 @@ const deleteEIById = async (req, res) => {
     try {
         const { id } = req.params;
         const user = await User.findByIdAndDelete(id);
-        
+
         if (!user) {
             return res.status(404).json({ error: "User not found" });
         }
-        
+
         res.status(200).json({ message: "User deleted successfully", status: 200 });
     } catch (error) {
         console.error(error.message);
@@ -132,19 +133,48 @@ const getAppointments = async (req, res) => {
 // Delete appointment by ID
 const deleteAppointmentById = async (req, res) => {
     const { id } = req.params;
-    
+
     try {
         const deletedAppointment = await Appointments.findByIdAndDelete(id);
-        
+
         if (!deletedAppointment) {
             return res.status(404).json({ error: 'Appointment not found' });
         }
-        
+
         res.status(200).json({ message: 'Appointment deleted successfully', status: 200 });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
 };
 
+//Get all Webinar Booking
+const getWebinarBooking = async (req, res) => {
+    try {
+        const webinarBooking = await WebinarBooking.find();
+        res.status(200).json(webinarBooking);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
 
-module.exports = { register, login, createUser, getAllEnterprenuers, deleteEIById, getAllInvestors, getAppointments, deleteAppointmentById };
+// Delete Webinar Booking by ID
+const deleteWebinarBookingById = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const deletedWebinarBooking = await WebinarBooking.findByIdAndDelete(id);
+        if (!deletedWebinarBooking) {
+            return res.status(404).json({ error: 'Webinar Booking not found' });
+        }
+        res.status(200).json({
+            message: 'Webinar Booking deleted successfully', status:
+                200
+        });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
+
+
+
+module.exports = { register, login, createUser, getAllEnterprenuers, deleteEIById, getAllInvestors, getAppointments, deleteAppointmentById, getWebinarBooking, deleteWebinarBookingById };
