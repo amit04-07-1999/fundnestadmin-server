@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const User = require('../adminModels/user')
 const Appointments = require('../adminModels/appointment')
 const WebinarBooking = require('../adminModels/webinar')
+const FAQs = require('../adminModels/faqs')
 // const Appointments = require('../../backend/model/appointment')
 
 
@@ -174,7 +175,29 @@ const deleteWebinarBookingById = async (req, res) => {
     }
 };
 
+//Create FAQs
+const createFAQs = async (req, res) => {
+    try {
+        const { question, answer } = req.body;
+        const newFAQs = new FAQs({ question, answer });
+        await newFAQs.save();
+        res.status(201).json({ newFAQs, message: 'FAQs created successfully', status: 201 });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
+//Get FAQs
+const getFAQs = async (req, res) => {
+    try {
+        const faqs = await FAQs.find();
+        res.status(200).json(faqs);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
 
 
 
-module.exports = { register, login, createUser, getAllEnterprenuers, deleteEIById, getAllInvestors, getAppointments, deleteAppointmentById, getWebinarBooking, deleteWebinarBookingById };
+
+module.exports = { register, login, createUser, getAllEnterprenuers, deleteEIById, getAllInvestors, getAppointments, deleteAppointmentById, getWebinarBooking, deleteWebinarBookingById, createFAQs, getFAQs };
