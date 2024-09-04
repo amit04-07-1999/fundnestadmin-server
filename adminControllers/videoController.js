@@ -45,7 +45,7 @@ exports.uploadVideo = (req, res) => {
       return res.status(400).json({ msg: 'No file selected' });
     }
 
-    const url = `http://103.189.172.172:4000/uploads/${req.file.filename}`;
+    const url = `http://localhost:4000/uploads/${req.file.filename}`;
     const newVideo = new Video({ url });
 
     newVideo.save()
@@ -62,7 +62,7 @@ exports.getVideos = (req, res) => {
       console.log(err);
       return res.status(500).json({ msg: 'Unable to scan directory' });
     }
-    const videoUrls = files.map(file => `http://103.189.172.172:4000/uploads/${file}`);
+    const videoUrls = files.map(file => `http://localhost:4000/uploads/${file}`);
     res.json(videoUrls);
   });
 };
