@@ -63,7 +63,7 @@ const login = async (req, res) => {
 };
 
 
-//Create Enterprenuer & Investor
+//Create entrepreneur & Investor
 const createUser = async (req, res) => {
     try {
         const { name, email, password, role } = req.body;
@@ -72,7 +72,7 @@ const createUser = async (req, res) => {
             name, email, password: hashedPassword, role
         });
         await eiUser.save();
-        res.status(201).json({ eiUser, message: 'Enterprenuer registered successfully' });
+        res.status(201).json({ eiUser, message: 'entrepreneur registered successfully' });
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'Server error' });
@@ -80,10 +80,10 @@ const createUser = async (req, res) => {
 };
 
 
-//Get All Enterprenuer
-const getAllEnterprenuers = async (req, res) => {
+//Get All entrepreneur
+const getAllentrepreneurs = async (req, res) => {
     try {
-        const users = await User.find({ role: 'enterprenuer' });
+        const users = await User.find({ role: 'entrepreneur' });
         // console.log(users);
         res.status(200).json(users);
     } catch (error) {
@@ -200,4 +200,4 @@ const getFAQs = async (req, res) => {
 
 
 
-module.exports = { register, login, createUser, getAllEnterprenuers, deleteEIById, getAllInvestors, getAppointments, deleteAppointmentById, getWebinarBooking, deleteWebinarBookingById, createFAQs, getFAQs };
+module.exports = { register, login, createUser, getAllentrepreneurs, deleteEIById, getAllInvestors, getAppointments, deleteAppointmentById, getWebinarBooking, deleteWebinarBookingById, createFAQs, getFAQs };
